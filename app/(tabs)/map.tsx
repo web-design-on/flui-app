@@ -13,13 +13,14 @@ import { router, useFocusEffect } from "expo-router";
 import React, { useCallback, useMemo, useState } from "react";
 import {
     Keyboard,
+    Platform,
     StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
     View,
 } from "react-native";
-import MapView, { Marker, Region } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE, Region } from "react-native-maps";
 import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -111,6 +112,7 @@ export default function MapScreen() {
     null,
   );
   const [region, setRegion] = useState<Region>(DEFAULT_REGION);
+  const [mapInstanceKey, setMapInstanceKey] = useState(0);
   const mapRef = React.useRef<MapView>(null);
 
   const filteredStations = useMemo(() => {
@@ -157,13 +159,16 @@ export default function MapScreen() {
       setFilters(EMPTY_FILTERS);
       setSelectedStationId(null);
       setRegion(DEFAULT_REGION);
+      setMapInstanceKey((key) => key + 1);
     }, []),
   );
 
   return (
     <View style={styles.screen}>
       <MapView
+        key={mapInstanceKey}
         ref={mapRef}
+        provider={Platform.OS === "android" ? PROVIDER_GOOGLE : undefined}
         style={StyleSheet.absoluteFill}
         initialRegion={DEFAULT_REGION}
         onRegionChangeComplete={setRegion}

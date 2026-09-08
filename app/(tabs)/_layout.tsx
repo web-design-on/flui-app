@@ -1,29 +1,65 @@
 import { Ionicons } from "@expo/vector-icons";
+import type { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
 import { Tabs } from "expo-router";
-import { ComponentProps } from "react";
-import { Platform, View } from "react-native";
+import { useCallback } from "react";
+import { Platform, Pressable } from "react-native";
+import Animated, {
+    useAnimatedStyle,
+    useSharedValue,
+    withSequence,
+    withTiming,
+} from "react-native-reanimated";
 import { colors } from "../../lib/theme/colors";
 
-function TabIcon({
-  name,
-  color,
-  focused,
-}: {
-  name: ComponentProps<typeof Ionicons>["name"];
-  color: string;
-  focused: boolean;
-}) {
+function TabButton({
+  accessibilityLabel,
+  accessibilityState,
+  children,
+  onLongPress,
+  onPress,
+  style,
+  testID,
+}: BottomTabBarButtonProps) {
+  const scale = useSharedValue(1);
+
+  const triggerPulse = useCallback(() => {
+    scale.value = withSequence(
+      withTiming(1.18, { duration: 100 }),
+      withTiming(1, { duration: 140 }),
+    );
+  }, [scale]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
   return (
-    <View>
-      <Ionicons name={name} size={26} color={color} />
-      {focused && <View />}
-    </View>
+    <Pressable
+      accessibilityLabel={accessibilityLabel}
+      accessibilityState={accessibilityState}
+      onPress={(event) => {
+        triggerPulse();
+        onPress?.(event);
+      }}
+      onLongPress={onLongPress}
+      android_ripple={{ color: "transparent" }}
+      style={[style, {
+        backgroundColor: "transparent",
+        justifyContent: "center",
+        alignItems: "center",
+      }]}
+      testID={testID}
+    >
+      <Animated.View pointerEvents="none" style={animatedStyle}>
+        {children}
+      </Animated.View>
+    </Pressable>
   );
 }
 
 export default function TabLayout() {
   const activeColor = colors.brand.primary;
-  const inactiveColor = colors.brand.light;
+  const inactiveColor = colors.brand.primary;
   const bgColor = colors.neutral.white;
   const borderColor = colors.neutral.borderSubtle;
 
@@ -37,6 +73,7 @@ export default function TabLayout() {
         tabBarItemStyle: {
           justifyContent: "center",
           alignItems: "center",
+          backgroundColor: "transparent",
         },
         tabBarStyle: {
           backgroundColor: bgColor,
@@ -53,11 +90,23 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
+          tabBarButton: (props) => (
+            <TabButton
+              accessibilityLabel={props.accessibilityLabel}
+              accessibilityState={props.accessibilityState}
+              onLongPress={props.onLongPress}
+              onPress={props.onPress}
+              style={props.style}
+              testID={props.testID}
+            >
+              {props.children}
+            </TabButton>
+          ),
           tabBarIcon: ({ focused }) => (
-            <TabIcon
+            <Ionicons
               name={focused ? "home" : "home-outline"}
+              size={26}
               color={focused ? activeColor : inactiveColor}
-              focused={focused}
             />
           ),
         }}
@@ -67,11 +116,23 @@ export default function TabLayout() {
         name="map"
         options={{
           title: "Mapa",
+          tabBarButton: (props) => (
+            <TabButton
+              accessibilityLabel={props.accessibilityLabel}
+              accessibilityState={props.accessibilityState}
+              onLongPress={props.onLongPress}
+              onPress={props.onPress}
+              style={props.style}
+              testID={props.testID}
+            >
+              {props.children}
+            </TabButton>
+          ),
           tabBarIcon: ({ focused }) => (
-            <TabIcon
+            <Ionicons
               name={focused ? "location" : "location-outline"}
+              size={26}
               color={focused ? activeColor : inactiveColor}
-              focused={focused}
             />
           ),
         }}

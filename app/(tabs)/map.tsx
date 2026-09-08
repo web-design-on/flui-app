@@ -1,7 +1,7 @@
 import { FilterIcon, LocateIcon, SearchIcon } from "@/components/icons";
 import StationFilterModal, {
-  EMPTY_FILTERS,
-  StationFilters,
+    EMPTY_FILTERS,
+    StationFilters,
 } from "@/components/station-filter-modal";
 import StationMapMarker from "@/components/station-map-marker";
 import StationPreviewCard from "@/components/station-preview.card";
@@ -12,15 +12,16 @@ import * as Location from "expo-location";
 import { router, useFocusEffect } from "expo-router";
 import React, { useCallback, useMemo, useState } from "react";
 import {
-  Keyboard,
-  Platform,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    Keyboard,
+    Platform,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE, Region } from "react-native-maps";
+import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const DEFAULT_REGION: Region = {
@@ -257,12 +258,16 @@ export default function MapScreen() {
       </TouchableOpacity>
 
       {selectedStation && (
-        <View style={styles.previewWrapper}>
+        <Animated.View
+          entering={FadeInDown.duration(350)}
+          exiting={FadeOutDown.duration(220)}
+          style={styles.previewWrapper}
+        >
           <StationPreviewCard
             station={selectedStation}
             onViewDetails={() => router.push(`./station/${selectedStation.id}`)}
           />
-        </View>
+        </Animated.View>
       )}
 
       <StationFilterModal

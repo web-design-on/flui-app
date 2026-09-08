@@ -3,21 +3,30 @@ import PrimaryButton from "@/components/primary-button";
 import { stations } from "@/lib/data";
 import { AppScreen, StationScoreDetails } from "@/lib/types";
 import {
-  getScoreGradient,
-  getScoreLabel,
-  getStatusColor,
-  unsplashUrl,
+    getScoreGradient,
+    getScoreLabel,
+    getStatusColor,
+    unsplashUrl,
 } from "@/lib/utils";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Image,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
+import Animated, {
+    FadeInDown,
+    FadeInUp,
+    FadeOutDown,
+    useAnimatedStyle,
+    withSequence,
+    withSpring,
+    withTiming,
+} from "react-native-reanimated";
 
 interface Props {
   stationId: string;
@@ -62,6 +71,25 @@ function ScoreBreakdown({ score }: { score: StationScoreDetails }) {
   );
 }
 
+function AnimatedHeartIcon({ isFav }: { isFav: boolean }) {
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        scale: withSequence(
+          withTiming(isFav ? 1.25 : 1, { duration: 120 }),
+          withSpring(1, { damping: 8, stiffness: 180 }),
+        ),
+      },
+    ],
+  }));
+
+  return (
+    <Animated.View style={animatedStyle}>
+      <HeartIcon filled={isFav} />
+    </Animated.View>
+  );
+}
+
 const movementLabels: Record<string, string> = {
   low: "Baixo movimento",
   moderate: "Movimento moderado",
@@ -90,7 +118,7 @@ export default function StationDetailScreen({
       style={styles.screen}
       contentContainerStyle={{ paddingBottom: 16 }}
     >
-      <View style={styles.hero}>
+      <Animated.View entering={FadeInUp.duration(320)} style={styles.hero}>
         <Image
           source={{ uri: unsplashUrl(station.unsplashId, 800, 400) }}
           style={styles.heroImage}
@@ -116,7 +144,7 @@ export default function StationDetailScreen({
             </Text>
           </View>
         )}
-      </View>
+      </Animated.View>
 
       <View style={styles.content}>
         <View style={styles.nameRow}>
@@ -158,14 +186,18 @@ export default function StationDetailScreen({
         </View>
 
         {showScore && (
-          <View style={styles.card}>
+          <Animated.View
+            entering={FadeInDown.duration(260)}
+            exiting={FadeOutDown.duration(180)}
+            style={styles.card}
+          >
             <Text style={styles.cardTitle}>Como calculamos?</Text>
             <ScoreBreakdown score={station.scoreDetails} />
             <Text style={styles.breakdownFootnote}>
               O Flui Score considera disponibilidade, velocidade, avaliações,
               confiabilidade e comodidades.
             </Text>
-          </View>
+          </Animated.View>
         )}
 
         <View style={styles.card}>
@@ -187,7 +219,7 @@ export default function StationDetailScreen({
                 { borderColor: isFav ? "#9333EA" : "#E5E7EB" },
               ]}
             >
-              <HeartIcon filled={isFav} />
+              <AnimatedHeartIcon isFav={isFav} />
               <Text
                 style={[
                   styles.saveButtonText,

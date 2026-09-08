@@ -10,6 +10,7 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
+import Animated, { FadeInUp, FadeOutDown } from "react-native-reanimated";
 import { BellIcon, SearchIcon } from "../../components/icons";
 import PrimaryButton from "../../components/primary-button";
 import StationCard from "../../components/station-card";
@@ -65,63 +66,65 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.featuredCard}>
-            <ImageBackground
-              resizeMode="cover"
-              style={{ width: "100%", height: 160 }}
-              source={{ uri: unsplashUrl(featured.unsplashId, 800, 400) }}
-            >
-              <View style={styles.updatedBadge}>
-                <Text style={styles.updatedBadgeText}>Atualizado agora</Text>
-              </View>
-            </ImageBackground>
-
-            <View style={styles.featuredBody}>
-              <View style={styles.featuredTopRow}>
-                <View style={{ flex: 1 }}>
-                  <Text style={styles.featuredName}>{featured.name}</Text>
-                  <View style={styles.ratingRow}>
-                    <Text style={styles.stars}>{"★".repeat(5)}</Text>
-                    <Text style={styles.ratingValue}>{featured.rating}</Text>
-                  </View>
+          <Animated.View entering={FadeInUp.duration(400)} exiting={FadeOutDown}>
+            <View style={styles.featuredCard}>
+              <ImageBackground
+                resizeMode="cover"
+                style={{ width: "100%", height: 160 }}
+                source={{ uri: unsplashUrl(featured.unsplashId, 800, 400) }}
+              >
+                <View style={styles.updatedBadge}>
+                  <Text style={styles.updatedBadgeText}>Atualizado agora</Text>
                 </View>
-                <LinearGradient
-                  colors={colors.gradients.scoreGood}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                  style={styles.scoreBadge}
-                >
-                  <Text style={styles.scoreValue}>{featured.score}</Text>
-                  <Text style={styles.scoreLabel}>FLUI SCORE</Text>
-                </LinearGradient>
-              </View>
+              </ImageBackground>
 
-              <View style={styles.metaRow}>
-                <View style={styles.availabilityPill}>
-                  <View style={styles.availabilityDot} />
-                  <Text style={styles.availabilityText}>
-                    {featured.available}/{featured.total} disponíveis
+              <View style={styles.featuredBody}>
+                <View style={styles.featuredTopRow}>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.featuredName}>{featured.name}</Text>
+                    <View style={styles.ratingRow}>
+                      <Text style={styles.stars}>{"★".repeat(5)}</Text>
+                      <Text style={styles.ratingValue}>{featured.rating}</Text>
+                    </View>
+                  </View>
+                  <LinearGradient
+                    colors={colors.gradients.scoreGood}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.scoreBadge}
+                  >
+                    <Text style={styles.scoreValue}>{featured.score}</Text>
+                    <Text style={styles.scoreLabel}>FLUI SCORE</Text>
+                  </LinearGradient>
+                </View>
+
+                <View style={styles.metaRow}>
+                  <View style={styles.availabilityPill}>
+                    <View style={styles.availabilityDot} />
+                    <Text style={styles.availabilityText}>
+                      {featured.available}/{featured.total} disponíveis
+                    </Text>
+                  </View>
+                  <Text style={styles.metaDot}>·</Text>
+                  <Text style={styles.metaText}>{featured.maxPower} kW</Text>
+                  <Text style={styles.metaDot}>·</Text>
+                  <Text style={styles.metaText}>{featured.timeMin} min</Text>
+                </View>
+
+                <View style={styles.reasonBox}>
+                  <Text style={styles.reasonText}>
+                    &ldquo;{featured.reason}&rdquo;
                   </Text>
                 </View>
-                <Text style={styles.metaDot}>·</Text>
-                <Text style={styles.metaText}>{featured.maxPower} kW</Text>
-                <Text style={styles.metaDot}>·</Text>
-                <Text style={styles.metaText}>{featured.timeMin} min</Text>
-              </View>
 
-              <View style={styles.reasonBox}>
-                <Text style={styles.reasonText}>
-                  &ldquo;{featured.reason}&rdquo;
-                </Text>
+                <PrimaryButton
+                  label="Ver ponto"
+                  onPress={() => router.push(`../station/${featured.id}`)}
+                  gradientStyle={styles.featuredCta}
+                />
               </View>
-
-              <PrimaryButton
-                label="Ver ponto"
-                onPress={() => router.push(`../station/${featured.id}`)}
-                gradientStyle={styles.featuredCta}
-              />
             </View>
-          </View>
+          </Animated.View>
         </View>
 
         <View>
@@ -133,13 +136,17 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </View>
           <View style={{ gap: 12 }}>
-            {nearby.map((s) => (
-              <StationCard
+            {nearby.map((s, index) => (
+              <Animated.View
                 key={s.id}
-                station={s}
-                onPress={() => router.push(`../station/${s.id}`)}
-                size="small"
-              />
+                entering={FadeInUp.delay(index * 120).duration(320)}
+              >
+                <StationCard
+                  station={s}
+                  onPress={() => router.push(`../station/${s.id}`)}
+                  size="small"
+                />
+              </Animated.View>
             ))}
           </View>
         </View>

@@ -178,9 +178,9 @@ const styles = StyleSheet.create({
   },
   summaryRow: {
     flexDirection: "row",
-    gap: 12,
+    gap: 16,
     paddingHorizontal: 20,
-    paddingBottom: 24,
+    paddingBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: colors.neutral.borderLight,
   },
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   records: {
-    gap: 12,
+    gap: 16,
     paddingVertical: 16,
     paddingHorizontal: 20,
   },

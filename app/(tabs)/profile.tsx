@@ -1,3 +1,4 @@
+import { useFavorites } from "@/lib/favorites-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import {
@@ -69,6 +70,8 @@ export default function ProfileScreen() {
     },
   ];
 
+  const { favorites } = useFavorites();
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -102,7 +105,7 @@ export default function ProfileScreen() {
           <TouchableOpacity
             style={styles.quickActionCard}
             activeOpacity={0.8}
-            // onPress={() => onSwitchTab("favorites")}
+            onPress={() => router.push("/(tabs)/favorites")}
           >
             <View
               style={[
@@ -115,7 +118,7 @@ export default function ProfileScreen() {
             <View>
               <Text style={styles.quickActionLabel}>Favoritos</Text>
               <Text style={styles.quickActionSub}>
-                {userProfile.savedFavoritesCount} ponto salvo
+                {favorites.size} ponto(s) salvo(s)
               </Text>
             </View>
           </TouchableOpacity>
@@ -299,7 +302,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   quickActionSub: {
-    fontSize: 11,
+    fontSize: 10,
     color: colors.neutral.placeholder,
     marginTop: 2,
   },

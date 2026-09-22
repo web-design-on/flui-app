@@ -137,12 +137,18 @@ const styles = StyleSheet.create({
   },
   form: { gap: 14, marginTop: 24, marginBottom: 24 },
   cancelButton: {
+    width: "100%",
+    paddingVertical: 14,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: "#E9D5FF",
+    backgroundColor: "#FAF5FF",
     alignItems: "center",
-    paddingVertical: 16,
+    marginTop: 8,
   },
   cancelText: {
     fontSize: 14,
     fontWeight: "600",
-    color: colors.neutral.textSubtle,
+    color: "#7E22CE",
   },
 });

@@ -1,14 +1,48 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { stations } from "../../lib/data";
 import { colors } from "../../lib/theme/colors";
 
 const historyRecords = [
-  { stationId: "1", date: "19 AGO", power: 100, duration: 34, energy: 38, rating: 4.5 },
-  { stationId: "6", date: "12 AGO", power: 150, duration: 22, energy: 35, rating: 5 },
-  { stationId: "5", date: "5 AGO", power: 75, duration: 41, energy: 42, rating: 4 },
-  { stationId: "3", date: "28 JUL", power: 120, duration: 32, energy: 28, rating: 4.5 },
+  {
+    stationId: "1",
+    date: "19 AGO",
+    power: 100,
+    duration: 34,
+    energy: 38,
+    rating: 4.5,
+  },
+  {
+    stationId: "6",
+    date: "12 AGO",
+    power: 150,
+    duration: 22,
+    energy: 35,
+    rating: 5,
+  },
+  {
+    stationId: "5",
+    date: "5 AGO",
+    power: 75,
+    duration: 41,
+    energy: 42,
+    rating: 4,
+  },
+  {
+    stationId: "3",
+    date: "28 JUL",
+    power: 120,
+    duration: 32,
+    energy: 28,
+    rating: 4.5,
+  },
 ];
 
 function Stars({ rating }: { rating: number }) {
@@ -35,19 +69,32 @@ export default function HistoryScreen() {
 
         <View style={styles.summaryRow}>
           <SummaryCard icon="flash" value="4" label="Recargas" />
-          <SummaryCard icon="battery-full" value="143 kWh" label="Energia total" />
+          <SummaryCard
+            icon="battery-full"
+            value="143 kWh"
+            label="Energia total"
+          />
           <SummaryCard icon="time-outline" value="2h09" label="Tempo total" />
         </View>
 
         <View style={styles.records}>
           {historyRecords.map((record) => {
-            const station = stations.find((item) => item.id === record.stationId);
+            const station = stations.find(
+              (item) => item.id === record.stationId,
+            );
             if (!station) return null;
 
             return (
-              <View key={`${record.stationId}-${record.date}`} style={styles.recordCard}>
+              <View
+                key={`${record.stationId}-${record.date}`}
+                style={styles.recordCard}
+              >
                 <View style={styles.stationIcon}>
-                  <Ionicons name="flash" size={28} color={colors.semantic.warningBright} />
+                  <Ionicons
+                    name="flash"
+                    size={28}
+                    color={colors.semantic.warningBright}
+                  />
                 </View>
 
                 <View style={styles.recordMain}>
@@ -55,9 +102,7 @@ export default function HistoryScreen() {
                     onPress={() => router.push(`/station/${station.id}`)}
                     activeOpacity={0.7}
                   >
-                    <Text style={styles.stationName}>
-                      {station.name}
-                    </Text>
+                    <Text style={styles.stationName}>{station.name}</Text>
                   </TouchableOpacity>
                   <Text style={styles.date}>{record.date}</Text>
 
@@ -111,18 +156,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 40,
-    backgroundColor: colors.neutral.white,
+    backgroundColor: colors.neutral.surface,
   },
   content: {
+    paddingTop: 16,
     paddingBottom: 24,
   },
   header: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
     paddingBottom: 32,
   },
   title: {
     color: colors.neutral.text,
-    fontSize: 28,
+    fontSize: 20,
     fontWeight: "700",
   },
   subtitle: {
@@ -133,7 +179,7 @@ const styles = StyleSheet.create({
   summaryRow: {
     flexDirection: "row",
     gap: 12,
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
     paddingBottom: 24,
     borderBottomWidth: 1,
     borderBottomColor: colors.neutral.borderLight,
@@ -161,7 +207,8 @@ const styles = StyleSheet.create({
   },
   records: {
     gap: 12,
-    padding: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
   },
   recordCard: {
     minHeight: 156,
@@ -174,10 +221,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.neutral.borderLight,
     shadowColor: colors.neutral.black,
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
   },
   stationIcon: {
     width: 56,

@@ -6,11 +6,11 @@ import { useFavorites } from "@/lib/favorites-context";
 import { colors } from "@/lib/theme/colors";
 import { router } from "expo-router";
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 export default function FavoritesScreen() {
@@ -42,6 +42,8 @@ export default function FavoritesScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+        <Text style={styles.title}>Favoritos</Text>
+
         {favStations.map((s) => (
           <StationCard
             key={s.id}
@@ -71,6 +73,11 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     backgroundColor: colors.neutral.surface,
   },
+  title: {
+    color: colors.neutral.text,
+    fontSize: 20,
+    fontWeight: "700",
+  },
   emptyState: {
     flex: 1,
     alignItems: "center",
@@ -80,7 +87,7 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontWeight: "700",
     color: colors.neutral.text,
-    fontSize: 18,
+    fontSize: 20,
     marginBottom: 8,
     textAlign: "center",
   },

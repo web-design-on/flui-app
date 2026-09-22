@@ -1,4 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 import {
   ScrollView,
   StyleSheet,
@@ -178,7 +179,11 @@ export default function ProfileScreen() {
           ))}
         </View>
 
-        <TouchableOpacity style={styles.signOutButton} activeOpacity={0.8}>
+        <TouchableOpacity
+          style={styles.signOutButton}
+          activeOpacity={0.8}
+          onPress={() => router.push("/(auth)/welcome")}
+        >
           <Text style={styles.signOutText}>Sair da conta</Text>
         </TouchableOpacity>
       </ScrollView>

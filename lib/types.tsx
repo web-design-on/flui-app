@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from "react-native";
+
 export interface StationConnector {
   type: string;
   power: number;
@@ -48,6 +50,7 @@ export interface Station {
   amenities: string[];
   reason: string;
   unsplashId: string;
+  image?: ImageSourcePropType;
   hours: string;
   bestTime: string;
   connectors: StationConnector[];
@@ -65,3 +68,24 @@ export type AppScreen =
   | { type: "map" }
   | { type: "travel" }
   | { type: "review"; stationId: string };
+
+export interface HistoryItem {
+  id: string;
+  stationId: string;
+  stationName: string;
+  vehicle: string;
+  date: string;
+  power: number;
+  duration: number;
+  rating: number | null;
+  energyKwh: number;
+  trip: {
+    origin: string;
+    arrivalTime: string;
+    destination: string;
+    distanceKm: number;
+    batteryStart: number;
+    batteryEnd: number;
+    cost: number;
+  };
+}

@@ -59,3 +59,9 @@ export function getStatusColor(status: Station["status"]): string {
 export function unsplashUrl(id: string, width = 800, height = 400): string {
   return `https://images.unsplash.com/${id}?w=${width}&h=${height}&fit=crop&q=80`;
 }
+
+export function formatDuration(totalMin: number): string {
+  const h = Math.floor(totalMin / 60);
+  const m = totalMin % 60;
+  return h > 0 ? `${h}h${String(m).padStart(2, "0")}` : `${m} min`;
+}

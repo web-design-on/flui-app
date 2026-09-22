@@ -16,6 +16,10 @@ export default function RootLayout() {
               name="profile-edit"
               options={{ headerShown: false }}
             />
+            <Stack.Screen
+              name="trip-summary"
+              options={{ headerShown: false }}
+            />
           </Stack>
         </FavoritesProvider>
       </ProfileProvider>

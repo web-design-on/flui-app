@@ -1,9 +1,5 @@
 import { Station } from "./types";
 
-/**
- * Dados de exemplo. Troque por uma chamada de API quando tiver o backend
- * pronto — o formato de cada item deve seguir a interface `Station`.
- */
 export const stations: Station[] = [
   {
     id: "1",
@@ -310,4 +306,42 @@ export const stations: Station[] = [
       },
     ],
   },
+];
+
+export interface UserProfile {
+  name: string;
+  email: string;
+  avatarInitial: string;
+  vehicle: string;
+  totalRecharges: number;
+  totalEnergyKwh: number;
+  stationsLabel: string;
+  savedFavoritesCount: number;
+}
+
+export const userProfile: UserProfile = {
+  name: "Natali Schers",
+  email: "natali@email.com.br",
+  avatarInitial: "N",
+  vehicle: "BYD Dolphin · 60 kWh",
+  totalRecharges: 4,
+  totalEnergyKwh: 143,
+  stationsLabel: "2",
+  savedFavoritesCount: 1,
+};
+
+export interface ProfileMenuItem {
+  id: string;
+  label: string;
+  sub: string | null;
+}
+
+export const profileMenuItems: ProfileMenuItem[] = [
+  {
+    id: "vehicle",
+    label: "Meu veículo",
+    sub: "BYD Dolphin · 60 kWh",
+  },
+  { id: "notifications", label: "Notificações", sub: "Ativadas" },
+  { id: "help", label: "Ajuda", sub: null },
 ];

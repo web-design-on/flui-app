@@ -4,10 +4,10 @@ import { Tabs } from "expo-router";
 import { useCallback } from "react";
 import { Platform, Pressable } from "react-native";
 import Animated, {
-    useAnimatedStyle,
-    useSharedValue,
-    withSequence,
-    withTiming,
+  useAnimatedStyle,
+  useSharedValue,
+  withSequence,
+  withTiming,
 } from "react-native-reanimated";
 import { colors } from "../../lib/theme/colors";
 
@@ -43,11 +43,14 @@ function TabButton({
       }}
       onLongPress={onLongPress}
       android_ripple={{ color: "transparent" }}
-      style={[style, {
-        backgroundColor: "transparent",
-        justifyContent: "center",
-        alignItems: "center",
-      }]}
+      style={[
+        style,
+        {
+          backgroundColor: "transparent",
+          justifyContent: "center",
+          alignItems: "center",
+        },
+      ]}
       testID={testID}
     >
       <Animated.View pointerEvents="none" style={animatedStyle}>
@@ -131,6 +134,32 @@ export default function TabLayout() {
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name={focused ? "location" : "location-outline"}
+              size={26}
+              color={focused ? activeColor : inactiveColor}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Meu Perfil",
+          tabBarButton: (props) => (
+            <TabButton
+              accessibilityLabel={props.accessibilityLabel}
+              accessibilityState={props.accessibilityState}
+              onLongPress={props.onLongPress}
+              onPress={props.onPress}
+              style={props.style}
+              testID={props.testID}
+            >
+              {props.children}
+            </TabButton>
+          ),
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? "person" : "person-outline"}
               size={26}
               color={focused ? activeColor : inactiveColor}
             />

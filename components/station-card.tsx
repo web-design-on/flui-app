@@ -1,4 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
+import { ReactNode } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../lib/theme/colors";
 import { Station } from "../lib/types";
@@ -9,6 +10,8 @@ interface Props {
   onPress: () => void;
   size?: "featured" | "large" | "small";
   showReason?: boolean;
+  rightAccessory?: ReactNode;
+  showScore?: boolean;
 }
 
 function ScoreBadge({ score }: { score: number }) {
@@ -41,19 +44,21 @@ export default function StationCard({
   onPress,
   size = "large",
   showReason = false,
+  rightAccessory,
+  showScore = true,
 }: Props) {
   const statusColor = getStatusColor(station.status);
   const amenities = station.amenities.slice(0, 3);
 
   if (size === "small") {
     return (
-      <TouchableOpacity
-        onPress={onPress}
-        activeOpacity={0.8}
-        style={styles.card}
-      >
+      <View style={styles.card}>
         <View style={styles.topRow}>
-          <View style={{ flex: 1 }}>
+          <TouchableOpacity
+            onPress={onPress}
+            activeOpacity={0.8}
+            style={styles.cardMain}
+          >
             <Text style={styles.nameSmall} numberOfLines={1}>
               {station.name}
             </Text>
@@ -71,10 +76,18 @@ export default function StationCard({
               <Text style={styles.metaDot}>·</Text>
               <Text style={styles.metaText}>{station.timeMin} min</Text>
             </View>
+          </TouchableOpacity>
+          <View
+            style={[
+              styles.rightAccessory,
+              !showScore && !rightAccessory && styles.emptyAccessory,
+            ]}
+          >
+            {showScore && <ScoreBadge score={station.score} />}
+            {rightAccessory}
           </View>
-          <ScoreBadge score={station.score} />
         </View>
-      </TouchableOpacity>
+      </View>
     );
   }
 
@@ -93,7 +106,7 @@ export default function StationCard({
             </Text>
           </View>
         </View>
-        <ScoreBadge score={station.score} />
+        {showScore && <ScoreBadge score={station.score} />}
       </View>
 
       <View style={styles.metaRowLarge}>
@@ -152,8 +165,6 @@ const styles = StyleSheet.create({
     lineHeight: 11,
   },
   stars: { fontSize: 12, color: colors.semantic.rating, letterSpacing: -1 },
-
-  // small variant
   topRow: {
     flexDirection: "row",
     alignItems: "flex-start",
@@ -161,6 +172,9 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   nameSmall: { fontWeight: "600", color: colors.neutral.text, fontSize: 14 },
+  cardMain: { flex: 1 },
+  rightAccessory: { alignItems: "flex-end", gap: 8 },
+  emptyAccessory: { display: "none" },
   metaRowSmall: {
     flexDirection: "row",
     alignItems: "center",
@@ -175,8 +189,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   amenityTextSmall: { fontSize: 12, color: colors.neutral.textSubtle },
-
-  // large variant
   topRowLarge: {
     flexDirection: "row",
     alignItems: "flex-start",

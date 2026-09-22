@@ -1,37 +1,36 @@
 import { BackIcon, ClockIcon, HeartIcon } from "@/components/icons";
 import PrimaryButton from "@/components/primary-button";
 import { stations } from "@/lib/data";
+import { useFavorites } from "@/lib/favorites-context";
 import { AppScreen, StationScoreDetails } from "@/lib/types";
 import {
-    getScoreGradient,
-    getScoreLabel,
-    getStatusColor,
-    unsplashUrl,
+  getScoreGradient,
+  getScoreLabel,
+  getStatusColor,
+  unsplashUrl,
 } from "@/lib/utils";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import {
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import Animated, {
-    FadeInDown,
-    FadeInUp,
-    FadeOutDown,
-    useAnimatedStyle,
-    withSequence,
-    withSpring,
-    withTiming,
+  FadeInDown,
+  FadeInUp,
+  FadeOutDown,
+  useAnimatedStyle,
+  withSequence,
+  withSpring,
+  withTiming,
 } from "react-native-reanimated";
 
 interface Props {
   stationId: string;
-  favorites: Set<string>;
-  onToggleFavorite: (id: string) => void;
   onBack: () => void;
   onNavigate: (screen: AppScreen) => void;
 }
@@ -102,11 +101,10 @@ const movementBars = [
 
 export default function StationDetailScreen({
   stationId,
-  favorites,
-  onToggleFavorite,
   onBack,
   onNavigate,
 }: Props) {
+  const { favorites, toggleFavorite } = useFavorites();
   const station = stations.find((s) => s.id === stationId) || stations[0];
   const isFav = favorites.has(stationId);
   const [showScore, setShowScore] = useState(false);
@@ -213,7 +211,7 @@ export default function StationDetailScreen({
               gradientStyle={{ paddingVertical: 12, marginBottom: 0 }}
             />
             <TouchableOpacity
-              onPress={() => onToggleFavorite(stationId)}
+              onPress={() => toggleFavorite(stationId)}
               style={[
                 styles.saveButton,
                 { borderColor: isFav ? "#9333EA" : "#E5E7EB" },
@@ -256,7 +254,11 @@ export default function StationDetailScreen({
                 ]}
               >
                 <View
-                  style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 8,
+                  }}
                 >
                   <Text style={styles.connectorType}>{c.type}</Text>
                   <Text>·</Text>
@@ -395,7 +397,9 @@ export default function StationDetailScreen({
                 key={r.id}
                 style={[
                   styles.reviewRow,
-                  i === station.reviews.length - 1 && { borderBottomWidth: 0 },
+                  i === station.reviews.length - 1 && {
+                    borderBottomWidth: 0,
+                  },
                 ]}
               >
                 <View style={styles.reviewHeader}>

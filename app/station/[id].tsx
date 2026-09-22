@@ -17,8 +17,6 @@ export default function StationRoute() {
   return (
     <StationDetailScreen
       stationId={id}
-      favorites={favorites}
-      onToggleFavorite={toggleFavorite}
       onBack={() => router.back()}
       onNavigate={(screen) => {
         if (screen.type === "detail")

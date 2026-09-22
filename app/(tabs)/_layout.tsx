@@ -142,6 +142,32 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
+        name="favorites"
+        options={{
+          title: "Favoritos",
+          tabBarButton: (props) => (
+            <TabButton
+              accessibilityLabel={props.accessibilityLabel}
+              accessibilityState={props.accessibilityState}
+              onLongPress={props.onLongPress}
+              onPress={props.onPress}
+              style={props.style}
+              testID={props.testID}
+            >
+              {props.children}
+            </TabButton>
+          ),
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? "heart" : "heart-outline"}
+              size={26}
+              color={focused ? activeColor : inactiveColor}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
         name="profile"
         options={{
           title: "Meu Perfil",

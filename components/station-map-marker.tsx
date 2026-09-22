@@ -4,8 +4,8 @@ import { getStatusColor } from "@/lib/utils";
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, View } from "react-native";
 import Animated, {
-    useAnimatedStyle,
-    withTiming
+  useAnimatedStyle,
+  withTiming,
 } from "react-native-reanimated";
 
 interface Props {
@@ -17,10 +17,6 @@ export default function StationMapMarker({ station, selected }: Props) {
   const color = getStatusColor(station.status);
 
   const bubbleStyle = useAnimatedStyle(() => ({
-    transform: [
-      { scale: withTiming(selected ? 1.14 : 1, { duration: 220 }) },
-      { translateY: withTiming(selected ? -4 : 0, { duration: 220 }) },
-    ],
     shadowOpacity: withTiming(selected ? 0.22 : 0.12, { duration: 220 }),
     shadowRadius: withTiming(selected ? 12 : 8, { duration: 220 }),
   }));

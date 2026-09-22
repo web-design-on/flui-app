@@ -1,4 +1,5 @@
 import { useFavorites } from "@/lib/favorites-context";
+import { useProfile } from "@/lib/profile-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import {
@@ -9,7 +10,7 @@ import {
   View,
 } from "react-native";
 import Svg, { Circle, Path, Polyline } from "react-native-svg";
-import { profileMenuItems, userProfile } from "../../lib/data";
+import { profileMenuItems } from "../../lib/data";
 import { colors } from "../../lib/theme/colors";
 
 function HeartIcon() {
@@ -52,20 +53,21 @@ function ChevronRightIcon() {
 }
 
 export default function ProfileScreen() {
+  const { profile } = useProfile();
   const summaryStats = [
     {
       label: "Recargas",
-      value: String(userProfile.totalRecharges),
+      value: String(profile.totalRecharges),
       unit: "total",
     },
     {
       label: "Energia",
-      value: String(userProfile.totalEnergyKwh),
+      value: String(profile.totalEnergyKwh),
       unit: "kWh",
     },
     {
       label: "Pontos",
-      value: userProfile.stationsLabel,
+      value: profile.stationsLabel,
       unit: "conhecidos",
     },
   ];
@@ -79,7 +81,7 @@ export default function ProfileScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.card}>
+        <View style={styles.profileCard}>
           <View style={styles.userRow}>
             <LinearGradient
               colors={[colors.brand.primary, colors.brand.light]}
@@ -87,16 +89,20 @@ export default function ProfileScreen() {
               end={{ x: 1, y: 1 }}
               style={styles.avatar}
             >
-              <Text style={styles.avatarText}>{userProfile.avatarInitial}</Text>
+              <Text style={styles.avatarText}>{profile.avatarInitial}</Text>
             </LinearGradient>
 
             <View style={styles.userInfo}>
-              <Text style={styles.userName}>{userProfile.name}</Text>
-              <Text style={styles.userEmail}>{userProfile.email}</Text>
+              <Text style={styles.userName}>{profile.name}</Text>
+              <Text style={styles.userEmail}>{profile.email}</Text>
             </View>
           </View>
 
-          <TouchableOpacity style={styles.editButton} activeOpacity={0.7}>
+          <TouchableOpacity
+            style={styles.editButton}
+            activeOpacity={0.7}
+            onPress={() => router.push("/profile-edit")}
+          >
             <Text style={styles.editButtonText}>Editar perfil</Text>
           </TouchableOpacity>
         </View>
@@ -139,7 +145,7 @@ export default function ProfileScreen() {
             <View>
               <Text style={styles.quickActionLabel}>Histórico</Text>
               <Text style={styles.quickActionSub}>
-                {userProfile.totalRecharges} recargas
+                {profile.totalRecharges} recargas
               </Text>
             </View>
           </TouchableOpacity>
@@ -147,7 +153,7 @@ export default function ProfileScreen() {
 
         <Text style={styles.sectionTitle}>Meu resumo</Text>
 
-        <View style={styles.card}>
+        <View style={styles.summaryCard}>
           <View style={styles.statsRow}>
             {summaryStats.map((stat) => (
               <View key={stat.label} style={styles.statItem}>
@@ -161,7 +167,19 @@ export default function ProfileScreen() {
 
         <Text style={styles.sectionTitle}>Informações Adicionais</Text>
 
-        <View style={styles.menuCard}>
+        <View style={styles.additionalInfoCard}>
+          <View style={styles.detailRow}>
+            <Text style={styles.detailLabel}>Telefone</Text>
+            <Text style={styles.detailValue}>
+              {profile.phone || "Não informado"}
+            </Text>
+          </View>
+          <View style={[styles.detailRow, styles.detailRowLast]}>
+            <Text style={styles.detailLabel}>Data de nascimento</Text>
+            <Text style={styles.detailValue}>
+              {profile.birthDate || "Não informado"}
+            </Text>
+          </View>
           {profileMenuItems.map((item, index) => (
             <TouchableOpacity
               key={item.id}
@@ -208,10 +226,35 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     gap: 16,
   },
-  card: {
+  profileCard: {
     backgroundColor: colors.neutral.white,
     borderRadius: 16,
     padding: 16,
+    borderWidth: 1,
+    borderColor: colors.neutral.borderLight,
+    shadowColor: colors.neutral.black,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  summaryCard: {
+    backgroundColor: colors.neutral.white,
+    borderRadius: 16,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: colors.neutral.borderLight,
+    shadowColor: colors.neutral.black,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  additionalInfoCard: {
+    backgroundColor: colors.neutral.white,
+    borderRadius: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 6,
     borderWidth: 1,
     borderColor: colors.neutral.borderLight,
     shadowColor: colors.neutral.black,
@@ -306,6 +349,29 @@ const styles = StyleSheet.create({
     color: colors.neutral.placeholder,
     marginTop: 2,
   },
+  detailRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    minHeight: 52,
+    paddingVertical: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.neutral.surface,
+  },
+  detailRowLast: {
+    paddingBottom: 14,
+  },
+  detailLabel: {
+    fontSize: 14,
+    color: colors.neutral.textSecondary,
+  },
+  detailValue: {
+    flexShrink: 1,
+    marginLeft: 16,
+    fontSize: 14,
+    color: colors.neutral.textSubtle,
+    textAlign: "right",
+  },
   sectionTitle: {
     fontWeight: "700",
     color: colors.neutral.text,
@@ -351,7 +417,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
-    paddingHorizontal: 16,
+    minHeight: 52,
     paddingVertical: 14,
     borderBottomWidth: 1,
     borderBottomColor: colors.neutral.surface,

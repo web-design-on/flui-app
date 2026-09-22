@@ -311,6 +311,8 @@ export const stations: Station[] = [
 export interface UserProfile {
   name: string;
   email: string;
+  phone: string;
+  birthDate: string;
   avatarInitial: string;
   vehicle: string;
   totalRecharges: number;
@@ -322,6 +324,8 @@ export interface UserProfile {
 export const userProfile: UserProfile = {
   name: "Natali Schers",
   email: "natali@email.com.br",
+  phone: "",
+  birthDate: "",
   avatarInitial: "N",
   vehicle: "BYD Dolphin · 60 kWh",
   totalRecharges: 4,
@@ -342,6 +346,4 @@ export const profileMenuItems: ProfileMenuItem[] = [
     label: "Meu veículo",
     sub: "BYD Dolphin · 60 kWh",
   },
-  { id: "notifications", label: "Notificações", sub: "Ativadas" },
-  { id: "help", label: "Ajuda", sub: null },
 ];

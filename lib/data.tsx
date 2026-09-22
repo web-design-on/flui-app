@@ -1,12 +1,12 @@
-import { Station } from "./types";
+import { HistoryItem, Station } from "./types";
 
 export const stations: Station[] = [
   {
     id: "1",
     latitude: -23.532,
     longitude: -46.728,
-    name: "Shopping Villa Lobos",
-    neighborhood: "Alto de Pinheiros",
+    name: "Volt Express Moema",
+    neighborhood: "Moema",
     rating: 4.5,
     reviewCount: 128,
     score: 94,
@@ -28,6 +28,7 @@ export const stations: Station[] = [
     amenities: ["Wi-Fi", "Café", "Banheiro", "Loja"],
     reason: "Ótimo equilíbrio entre velocidade, disponibilidade e comodidades.",
     unsplashId: "photo-1593941707882-a5bba14938c7",
+    image: require("../assets/images/ponto-recarga-VoltExpressMoema.jpg"),
     hours: "24 horas",
     bestTime: "Antes das 10h ou depois das 20h",
     connectors: [
@@ -62,8 +63,8 @@ export const stations: Station[] = [
     id: "2",
     latitude: -23.527,
     longitude: -46.698,
-    name: "Posto Ipiranga - Marginal",
-    neighborhood: "Lapa",
+    name: "Santana Power Point",
+    neighborhood: "Santana",
     rating: 4,
     reviewCount: 64,
     score: 82,
@@ -85,6 +86,7 @@ export const stations: Station[] = [
     amenities: ["Café", "Banheiro"],
     reason: "Boa disponibilidade e fácil acesso pela marginal.",
     unsplashId: "photo-1620200423727-8127f75d7f53",
+    image: require("../assets/images/ponto-recarga-SantanaPowerPoint.jpg"),
     hours: "05h às 23h",
     bestTime: "Manhã, antes das 8h",
     connectors: [{ type: "Tipo 2", power: 60, available: 2, total: 4 }],
@@ -109,7 +111,7 @@ export const stations: Station[] = [
     id: "3",
     latitude: -23.5613,
     longitude: -46.6558,
-    name: "Estação Elera - Av. Paulista",
+    name: "Recarga Fácil Paulista",
     neighborhood: "Bela Vista",
     rating: 4.5,
     reviewCount: 210,
@@ -132,6 +134,7 @@ export const stations: Station[] = [
     amenities: ["Wi-Fi", "Restaurante", "Estacionamento coberto"],
     reason: "Central, mas com maior tempo de espera no horário de pico.",
     unsplashId: "photo-1601362840469-51e4d8d58785",
+    image: require("../assets/images/ponto-recarga-RecargaFacilPaulista.jpg"),
     hours: "24 horas",
     bestTime: "Fins de semana pela manhã",
     connectors: [
@@ -166,8 +169,8 @@ export const stations: Station[] = [
     id: "4",
     latitude: -23.599,
     longitude: -46.707,
-    name: "EcoCharge - Morumbi",
-    neighborhood: "Morumbi",
+    name: "EcoCarga Itaim",
+    neighborhood: "Itaim Bibi",
     rating: 3.5,
     reviewCount: 37,
     score: 58,
@@ -189,6 +192,7 @@ export const stations: Station[] = [
     amenities: ["Segurança 24h", "Aberto 24h"],
     reason: "Sem vagas livres no momento, mas rota rápida até lá.",
     unsplashId: "photo-1621905251189-08b45d6a269e",
+    image: require("../assets/images/ponto-recarga-EcoCargaItaim.jpg"),
     hours: "06h às 22h",
     bestTime: "Início da manhã",
     connectors: [{ type: "Tipo 2", power: 50, available: 0, total: 3 }],
@@ -306,6 +310,19 @@ export const stations: Station[] = [
       },
     ],
   },
+];
+
+/**
+ * Recargas já realizadas, da mais recente para a mais antiga.
+ * Valores coerentes entre si: bateria de 60 kWh (energia = % carregada × 60),
+ * tarifa de R$ 1,40/kWh, e potência média (energia ÷ duração) dentro da
+ * potência utilizada.
+ */
+export const historyItems: HistoryItem[] = [
+  { id: "h1", stationId: "1", stationName: "Volt Express Moema", vehicle: "BYD Dolphin", date: "28 AGO", power: 150, duration: 28, rating: null, energyKwh: 37.2, trip: { origin: "São Paulo, SP", arrivalTime: "08:42", destination: "Campinas, SP", distanceKm: 96, batteryStart: 18, batteryEnd: 80, cost: 52.08 } },
+  { id: "h2", stationId: "3", stationName: "Recarga Fácil Paulista", vehicle: "BYD Dolphin", date: "19 AGO", power: 100, duration: 34, rating: 4.5, energyKwh: 37.8, trip: { origin: "São Paulo, SP", arrivalTime: "17:15", destination: "Santos, SP", distanceKm: 72, batteryStart: 22, batteryEnd: 85, cost: 52.92 } },
+  { id: "h3", stationId: "4", stationName: "EcoCarga Itaim", vehicle: "BYD Dolphin", date: "12 AGO", power: 45, duration: 50, rating: 5, energyKwh: 37.8, trip: { origin: "São Paulo, SP", arrivalTime: "13:05", destination: "Sorocaba, SP", distanceKm: 100, batteryStart: 15, batteryEnd: 78, cost: 52.92 } },
+  { id: "h4", stationId: "2", stationName: "Santana Power Point", vehicle: "BYD Dolphin", date: "5 AGO", power: 50, duration: 45, rating: 4, energyKwh: 31.2, trip: { origin: "São Paulo, SP", arrivalTime: "10:30", destination: "Jundiaí, SP", distanceKm: 60, batteryStart: 30, batteryEnd: 82, cost: 43.68 } },
 ];
 
 export interface UserProfile {

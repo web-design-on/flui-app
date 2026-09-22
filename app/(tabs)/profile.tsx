@@ -3,11 +3,11 @@ import { useProfile } from "@/lib/profile-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import Svg, { Circle, Path, Polyline } from "react-native-svg";
 import { profileMenuItems } from "../../lib/data";
@@ -132,7 +132,7 @@ export default function ProfileScreen() {
           <TouchableOpacity
             style={styles.quickActionCard}
             activeOpacity={0.8}
-            // onPress={() => onSwitchTab("history")}
+            onPress={() => router.push("/(tabs)/history")}
           >
             <View
               style={[

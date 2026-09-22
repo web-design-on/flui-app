@@ -49,9 +49,7 @@ export interface Station {
   movement: "low" | "moderate" | "high";
   amenities: string[];
   reason: string;
-  /** ID da foto no Unsplash, usado por unsplashUrl() em utils.ts */
   unsplashId: string;
-  /** Foto do ponto de recarga (asset local), usada no resumo da viagem. Nem todo posto tem uma. */
   image?: ImageSourcePropType;
   hours: string;
   bestTime: string;

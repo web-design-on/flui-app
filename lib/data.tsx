@@ -312,12 +312,6 @@ export const stations: Station[] = [
   },
 ];
 
-/**
- * Recargas já realizadas, da mais recente para a mais antiga.
- * Valores coerentes entre si: bateria de 60 kWh (energia = % carregada × 60),
- * tarifa de R$ 1,40/kWh, e potência média (energia ÷ duração) dentro da
- * potência utilizada.
- */
 export const historyItems: HistoryItem[] = [
   { id: "h1", stationId: "1", stationName: "Volt Express Moema", vehicle: "BYD Dolphin", date: "28 AGO", power: 150, duration: 28, rating: null, energyKwh: 37.2, trip: { origin: "São Paulo, SP", arrivalTime: "08:42", destination: "Campinas, SP", distanceKm: 96, batteryStart: 18, batteryEnd: 80, cost: 52.08 } },
   { id: "h2", stationId: "3", stationName: "Recarga Fácil Paulista", vehicle: "BYD Dolphin", date: "19 AGO", power: 100, duration: 34, rating: 4.5, energyKwh: 37.8, trip: { origin: "São Paulo, SP", arrivalTime: "17:15", destination: "Santos, SP", distanceKm: 72, batteryStart: 22, batteryEnd: 85, cost: 52.92 } },

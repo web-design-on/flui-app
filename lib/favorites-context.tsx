@@ -42,7 +42,9 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     AsyncStorage.setItem(
       STORAGE_KEY,
       JSON.stringify(Array.from(favorites)),
-    ).catch((err) => console.warn("Não foi possível salvar os favoritos", err));
+    ).catch((err: unknown) =>
+      console.warn("Não foi possível salvar os favoritos", err),
+    );
   }, [favorites, isLoaded]);
 
   const toggleFavorite = (id: string) => {

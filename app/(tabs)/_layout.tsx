@@ -4,10 +4,10 @@ import { Tabs } from "expo-router";
 import { useCallback } from "react";
 import { Platform, Pressable } from "react-native";
 import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSequence,
-  withTiming,
+    useAnimatedStyle,
+    useSharedValue,
+    withSequence,
+    withTiming,
 } from "react-native-reanimated";
 import { colors } from "../../lib/theme/colors";
 
@@ -160,6 +160,32 @@ export default function TabLayout() {
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name={focused ? "heart" : "heart-outline"}
+              size={26}
+              color={focused ? activeColor : inactiveColor}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="history"
+        options={{
+          title: "Histórico",
+          tabBarButton: (props) => (
+            <TabButton
+              accessibilityLabel={props.accessibilityLabel}
+              accessibilityState={props.accessibilityState}
+              onLongPress={props.onLongPress}
+              onPress={props.onPress}
+              style={props.style}
+              testID={props.testID}
+            >
+              {props.children}
+            </TabButton>
+          ),
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? "time" : "time-outline"}
               size={26}
               color={focused ? activeColor : inactiveColor}
             />

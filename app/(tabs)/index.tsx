@@ -2,19 +2,20 @@ import { unsplashUrl } from "@/lib/utils";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import {
-    Image,
-    ImageBackground,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import Animated, { FadeInUp, FadeOutDown } from "react-native-reanimated";
-import { BellIcon, SearchIcon } from "../../components/icons";
+import { SearchIcon } from "../../components/icons";
 import PrimaryButton from "../../components/primary-button";
 import StationCard from "../../components/station-card";
 import { stations } from "../../lib/data";
+import { requestMapSearchFocus } from "../../lib/map-search-focus";
 import { colors } from "../../lib/theme/colors";
 
 export default function HomeScreen() {
@@ -33,11 +34,11 @@ export default function HomeScreen() {
             source={require("../../assets/images/flui-purple.png")}
             style={styles.logo}
           />
-          <View style={styles.topBarActions}>
+          {/* <View style={styles.topBarActions}>
             <TouchableOpacity style={styles.iconButton}>
               <BellIcon />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
 
         <View style={styles.greeting}>
@@ -46,7 +47,10 @@ export default function HomeScreen() {
         </View>
 
         <TouchableOpacity
-          //onPress={() => router.push("/results")}
+          onPress={() => {
+            requestMapSearchFocus();
+            router.push("/(tabs)/map");
+          }}
           style={styles.searchBar}
           activeOpacity={0.8}
         >
@@ -66,7 +70,10 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </View>
 
-          <Animated.View entering={FadeInUp.duration(400)} exiting={FadeOutDown}>
+          <Animated.View
+            entering={FadeInUp.duration(400)}
+            exiting={FadeOutDown}
+          >
             <View style={styles.featuredCard}>
               <ImageBackground
                 resizeMode="cover"

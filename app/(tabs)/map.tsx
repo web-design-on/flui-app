@@ -6,11 +6,12 @@ import StationFilterModal, {
 import StationMapMarker from "@/components/station-map-marker";
 import StationPreviewCard from "@/components/station-preview.card";
 import { stations } from "@/lib/data";
+import { consumeMapSearchFocus } from "@/lib/map-search-focus";
 import { colors } from "@/lib/theme/colors";
 import { Station } from "@/lib/types";
 import * as Location from "expo-location";
 import { router, useFocusEffect } from "expo-router";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import {
   Keyboard,
   StyleSheet,
@@ -112,6 +113,7 @@ export default function MapScreen() {
   );
   const [region, setRegion] = useState<Region>(DEFAULT_REGION);
   const mapRef = React.useRef<MapView>(null);
+  const searchInputRef = useRef<TextInput>(null);
 
   const filteredStations = useMemo(() => {
     return stations.filter((s) => {
@@ -157,6 +159,14 @@ export default function MapScreen() {
       setFilters(EMPTY_FILTERS);
       setSelectedStationId(null);
       setRegion(DEFAULT_REGION);
+
+      if (consumeMapSearchFocus()) {
+        const timeout = setTimeout(() => {
+          searchInputRef.current?.focus();
+        }, 350);
+
+        return () => clearTimeout(timeout);
+      }
     }, []),
   );
 
@@ -196,6 +206,8 @@ export default function MapScreen() {
           <View style={styles.searchBar}>
             <SearchIcon />
             <TextInput
+              ref={searchInputRef}
+              showSoftInputOnFocus
               value={search}
               onChangeText={setSearch}
               placeholder="Buscar nesta área…"

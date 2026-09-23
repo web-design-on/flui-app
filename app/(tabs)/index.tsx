@@ -137,8 +137,7 @@ export default function HomeScreen() {
         <View>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Pontos próximos</Text>
-            <TouchableOpacity //onPress={() => router.push("/travel")}
-            >
+            <TouchableOpacity onPress={() => router.push("/(tabs)/map")}>
               <Text style={styles.sectionLink}>Ver todos</Text>
             </TouchableOpacity>
           </View>

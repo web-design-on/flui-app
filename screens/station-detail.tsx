@@ -414,7 +414,7 @@ export default function StationDetailScreen({
         </View>
 
         <TouchableOpacity
-          // onPress={() => onNavigate({ type: "review", stationId })}
+          onPress={() => onNavigate({ type: "review", stationId })}
           style={styles.reviewCta}
         >
           <Text style={styles.reviewCtaText}> Avaliar este ponto</Text>

@@ -11,6 +11,12 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen name="[id]" />
+      <Tabs.Screen
+        name="[id]/review"
+        options={{
+          tabBarStyle: { display: "none" },
+        }}
+      />
     </Tabs>
   );
 }

@@ -3,14 +3,13 @@ import { useProfile } from "@/lib/profile-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import Svg, { Circle, Path, Polyline } from "react-native-svg";
-import { profileMenuItems } from "../../lib/data";
 import { colors } from "../../lib/theme/colors";
 
 function HeartIcon() {
@@ -53,7 +52,7 @@ function ChevronRightIcon() {
 }
 
 export default function ProfileScreen() {
-  const { profile } = useProfile();
+  const { profile, defaultVehicle } = useProfile();
   const summaryStats = [
     {
       label: "Recargas",
@@ -73,6 +72,15 @@ export default function ProfileScreen() {
   ];
 
   const { favorites } = useFavorites();
+  const profileMenuItems = [
+    {
+      id: "vehicle",
+      label: "Meu veículo",
+      sub: defaultVehicle
+        ? `${defaultVehicle.name} · ${defaultVehicle.batteryKwh} kWh`
+        : "Nenhum veículo salvo",
+    },
+  ];
 
   return (
     <View style={styles.container}>
@@ -188,6 +196,7 @@ export default function ProfileScreen() {
                 index === profileMenuItems.length - 1 && styles.menuItemLast,
               ]}
               activeOpacity={0.6}
+              onPress={() => router.push("/vehicles" as any)}
             >
               <View style={styles.menuTextWrap}>
                 <Text style={styles.menuLabel}>{item.label}</Text>

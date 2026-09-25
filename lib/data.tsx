@@ -313,10 +313,116 @@ export const stations: Station[] = [
 ];
 
 export const historyItems: HistoryItem[] = [
-  { id: "h1", stationId: "1", stationName: "Volt Express Moema", vehicle: "BYD Dolphin", date: "28 AGO", power: 150, duration: 28, rating: null, energyKwh: 37.2, trip: { origin: "São Paulo, SP", arrivalTime: "08:42", destination: "Campinas, SP", distanceKm: 96, batteryStart: 18, batteryEnd: 80, cost: 52.08 } },
-  { id: "h2", stationId: "3", stationName: "Recarga Fácil Paulista", vehicle: "BYD Dolphin", date: "19 AGO", power: 100, duration: 34, rating: 4.5, energyKwh: 37.8, trip: { origin: "São Paulo, SP", arrivalTime: "17:15", destination: "Santos, SP", distanceKm: 72, batteryStart: 22, batteryEnd: 85, cost: 52.92 } },
-  { id: "h3", stationId: "4", stationName: "EcoCarga Itaim", vehicle: "BYD Dolphin", date: "12 AGO", power: 45, duration: 50, rating: 5, energyKwh: 37.8, trip: { origin: "São Paulo, SP", arrivalTime: "13:05", destination: "Sorocaba, SP", distanceKm: 100, batteryStart: 15, batteryEnd: 78, cost: 52.92 } },
-  { id: "h4", stationId: "2", stationName: "Santana Power Point", vehicle: "BYD Dolphin", date: "5 AGO", power: 50, duration: 45, rating: 4, energyKwh: 31.2, trip: { origin: "São Paulo, SP", arrivalTime: "10:30", destination: "Jundiaí, SP", distanceKm: 60, batteryStart: 30, batteryEnd: 82, cost: 43.68 } },
+  {
+    id: "h1",
+    stationId: "1",
+    stationName: "Volt Express Moema",
+    vehicle: "BYD Dolphin",
+    date: "28 AGO",
+    power: 150,
+    duration: 28,
+    rating: null,
+    energyKwh: 37.2,
+    trip: {
+      origin: "São Paulo, SP",
+      arrivalTime: "08:42",
+      destination: "Campinas, SP",
+      distanceKm: 96,
+      batteryStart: 18,
+      batteryEnd: 80,
+      cost: 52.08,
+    },
+  },
+  {
+    id: "h2",
+    stationId: "3",
+    stationName: "Recarga Fácil Paulista",
+    vehicle: "BYD Dolphin",
+    date: "19 AGO",
+    power: 100,
+    duration: 34,
+    rating: 4.5,
+    energyKwh: 37.8,
+    trip: {
+      origin: "São Paulo, SP",
+      arrivalTime: "17:15",
+      destination: "Santos, SP",
+      distanceKm: 72,
+      batteryStart: 22,
+      batteryEnd: 85,
+      cost: 52.92,
+    },
+  },
+  {
+    id: "h3",
+    stationId: "4",
+    stationName: "EcoCarga Itaim",
+    vehicle: "BYD Dolphin",
+    date: "12 AGO",
+    power: 45,
+    duration: 50,
+    rating: 5,
+    energyKwh: 37.8,
+    trip: {
+      origin: "São Paulo, SP",
+      arrivalTime: "13:05",
+      destination: "Sorocaba, SP",
+      distanceKm: 100,
+      batteryStart: 15,
+      batteryEnd: 78,
+      cost: 52.92,
+    },
+  },
+  {
+    id: "h4",
+    stationId: "2",
+    stationName: "Santana Power Point",
+    vehicle: "BYD Dolphin",
+    date: "5 AGO",
+    power: 50,
+    duration: 45,
+    rating: 4,
+    energyKwh: 31.2,
+    trip: {
+      origin: "São Paulo, SP",
+      arrivalTime: "10:30",
+      destination: "Jundiaí, SP",
+      distanceKm: 60,
+      batteryStart: 30,
+      batteryEnd: 82,
+      cost: 43.68,
+    },
+  },
+];
+
+export interface Vehicle {
+  id: string;
+  brand: string;
+  model: string;
+  name: string;
+  batteryKwh: number;
+  connector: "Tipo 2" | "CCS2" | "CHAdeMO";
+  isDefault?: boolean;
+}
+
+export const defaultVehicles: Vehicle[] = [
+  {
+    id: "vehicle-1",
+    brand: "BYD",
+    model: "Dolphin",
+    name: "BYD Dolphin",
+    batteryKwh: 60,
+    connector: "CCS2",
+    isDefault: true,
+  },
+  {
+    id: "vehicle-2",
+    brand: "Tesla",
+    model: "Model 3",
+    name: "Tesla Model 3",
+    batteryKwh: 75,
+    connector: "CCS2",
+  },
 ];
 
 export interface UserProfile {

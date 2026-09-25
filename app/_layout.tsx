@@ -12,6 +12,7 @@ export default function RootLayout() {
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="station" options={{ headerShown: false }} />
+            <Stack.Screen name="vehicles" options={{ headerShown: false }} />
             <Stack.Screen
               name="profile-edit"
               options={{ headerShown: false }}
